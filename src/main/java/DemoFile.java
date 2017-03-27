@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FilenameFilter;
 
 /**
  * Created by Houfy on 2017/3/20.
@@ -10,22 +11,65 @@ public class DemoFile {
 
     public static void main(String[] args) {
 
-//        Constructor
-        File f1 = new File("F:\\");
-        File f2 = new File("F:\\","t1.txt");
+/*  四种构造函数
+* File(String filePath)
+* File(String parent, String child)
+* File(File parent, String chile)
+* File(URI uri)
+* */
+        File f1 = new File("F:\\Dropbox\\Daily");
+        File f2 = new File("F:\\Dropbox\\Daily","t1.txt");
         File f3 = new File(f1,"t2.txt");
 
-//        File Path
+/*方法toString()
+* 返回getPath()
+* */
         print(f1.toString());
-        print(f2.toString());
-        print(f3.toString());
 
-//        File Lists
-        for (String s:f1.list()){
-            print(s);
-        }
 
-//        File Basic Properties
+/*方法
+* public String[] list()
+* public String[] list(FilenameFilter filter)
+* public File[] listFiles()
+* public File[] listFiles(FilenameFilter filter)
+* public File[] listFiles(FileFilter filter)
+* */
+
+//使用文件过滤器筛选java文件
+        String[] selectedNames = f1.list(new FilenameFilter() {
+            //匿名内部类实现了FilenameFilter接口
+
+            //实现接口中的方法
+            @Override
+            public boolean accept(File dir, String name) {
+
+                if(name.endsWith(".java")){
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
+
+
+/*获取文件常用属性
+* getName()
+* getParent()
+* getPath()
+* getAbsolutePath()
+*
+* exists()
+* isFile()
+* isDirectory()
+* isAbsolute() 判断文件是否拥有绝对路径
+* canRead()
+* canWrite()
+* canExecute()
+*
+* length()
+* lastModified()
+* */
         print("File Name: " + f1.getName());
         print("Path: " + f1.getPath());
         print("Abs Path: " + f1.getAbsolutePath());
@@ -40,4 +84,17 @@ public class DemoFile {
         print("File size: " + f1.length() + " Bytes");
 
     }
+
+/*方法
+* boolean renameTo(File newName)
+* boolean delete()
+* void deleteOnExit()
+* boolean isHidden()
+* boolean setLastModified(long millisec)
+* boolean setReadOnly()
+*
+* mkdir()
+* mkdirs()
+* */
+
 }
